@@ -2,7 +2,7 @@ const pako = require("pako");
 const express = require("express");
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.get("*", (req, res) => {
     res.send(gzipToText(req.path.slice(1)));
@@ -10,7 +10,7 @@ app.get("*", (req, res) => {
 
 function gzipToText(input) {
     try {
-        var stringValue = atob(input.trim());
+        var stringValue = Buffer.from(input.trim(), "base64").toString();
         var charArray = stringValue.split("").map(function (x) {
             return x.charCodeAt(0);
         });
