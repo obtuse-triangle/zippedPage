@@ -10,7 +10,7 @@ app.get("*", (req, res) => {
 
 function gzipToText(input) {
     try {
-        var stringValue = Buffer.from(input.trim(), "base64").toString();
+        var stringValue = Buffer.from(input.trim(), "base64").toString("binary");
         var charArray = stringValue.split("").map(function (x) {
             return x.charCodeAt(0);
         });
