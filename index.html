@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>gzipURLPage</title>
+        <style>
+            .m {
+                width: 90%;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            .m > * {
+                width: 100%;
+                max-width: 600px;
+            }
+            textarea {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                min-height: 150px;
+            }
+            .vf {
+                display: flex;
+            }
+            .vf > * {
+                margin: 2px 15px 2px 0;
+            }
+            select {
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="m">
+            <h1>Welcome to gzipURLPage</h1>
+            <span>
+                This HTML was included in the URL! <br />
+                To host yours, copy your code and paste it below.</span
+            >
+            <br />
+            <label for="i">input</label>
+            <br />
+            <textarea id="i"></textarea>
+            <br />
+            <div class="vf">
+                <select id="ca">
+                    <option value="b">Brotli</option>
+                    <option value="g">GZip</option>
+                </select>
+                <label><input type="checkbox" id="m" checked />minify</label>
+            </div>
+            <button onclick="c(event)">compress</button>
+            <br />
+            <label for="o">output</label>
+            <br />
+            <textarea id="o"></textarea>
+            <script>
+                function c(evt) {
+                    evt.preventDefault();
+                    var a = document.getElementById("i").value;
+                    if (document.getElementById("m").checked) {
+                        window
+                            .minify(a, {
+                                collapseWhitespace: true,
+                                keepClosingSlash: true,
+                                removeComments: true,
+                                removeRedundantAttributes: true,
+                                removeScriptTypeAttributes: true,
+                                removeStyleLinkTypeAttributes: true,
+                                useShortDoctype: true,
+                                minifyCSS: true,
+                                minifyJS: true,
+                            })
+                            .then((r) => {
+                                a = r;
+                                console.log(a);
+                            });
+                    }
+                    if (document.getElementById("ca").value === "b") {
+                        const te = new TextEncoder();
+                        s = uint8ToString(br.compress(te.encode(a)));
+                    } else {
+                        s = uint8ToString(pako.gzip(a, { to: "string" }));
+                    }
+                    document.getElementById("o").value = "https://gzip.obtuse.kr/" + btoa(s);
+                }
+                function uint8ToString(uint8Value) {
+                    var bufferSize = 0x8000;
+                    var c = [];
+                    for (var i = 0; i < uint8Value.length; i += bufferSize) {
+                        c.push(String.fromCharCode.apply(null, uint8Value.subarray(i, i + bufferSize)));
+                    }
+                    return c.join("");
+                }
+            </script>
+        </div>
+
+        <!-- <script>
+            function c(e) {
+                e.preventDefault();
+                var n = document.getElementById("i").value;
+                if (
+                    (document.getElementById("m").checked &&
+                        ((n = window.minify(n, { collapseWhitespace: true, minifyCSS: true, minifyJS: true, keepClosingSlash: false, processConditionalComments: true })),
+                        console.log(n)),
+                    "b" === document.getElementById("ca").value)
+                ) {
+                    let t = new TextEncoder();
+                    s = uint8ToString(br.compress(t.encode(n)));
+                } else s = uint8ToString(pako.gzip(n, { to: "string" }));
+                document.getElementById("o").value = btoa(s);
+            }
+            function uint8ToString(e) {
+                for (var n = [], t = 0; t < e.length; t += 32768) n.push(String.fromCharCode.apply(null, e.subarray(t, t + 32768)));
+                return n.join("");
+            }
+        </script> -->
+        <!-- <script src="https://kangax.github.io/html-minifier/dist/htmlminifier.min.js"></script> -->
+        <!-- <script src=""></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/pako/dist/pako.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+            integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+
+        <!-- <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/transform.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/scope.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/propmangle.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/parse.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/output.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/minify.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/compress.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/ast.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/uglify/lib/utils.js"></script>
+        <script src="https://skalman.github.io/UglifyJS-online/script.js"></script> -->
+        <script>
+            // window.minify = require("html-minifier").minify;
+            bp = import("https://unpkg.com/brotli-wasm@1.3.1/index.web.js?module").then((m) => m.default);
+            var br;
+            bp.then((r) => (br = r));
+            var minifier;
+            require(["https://cdn.jsdelivr.net/npm/html-minifier-terser@7.2.0/dist/htmlminifier.umd.bundle.min.js"], (module) => {
+                window.minify = module.minify;
+            });
+        </script>
+    </body>
+</html>
