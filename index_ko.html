@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,10 +84,10 @@
     </head>
     <body>
         <div class="m">
-            <h1>Welcome to gzipURLPage</h1>
+            <h1>gzipURLPage에 오신것을 환영합니다!</h1>
             <span>
-                This HTML was included in the URL! <br />
-                To host yours, copy your code and paste it below.</span
+                이 HTML은 URL에 포함되어 있습니다! <br />
+                당신의 HTML을 호스트하기 위해서는 코드를 복사하고, 아래에 붙여넣으세요. 자동으로 URL에 HTML이 압축되어 저장됩니다</span
             >
             <br /><br />
             <label for="i">HTML</label>
@@ -95,13 +95,13 @@
             <textarea oninput="c()" id="i"></textarea>
             <br />
             <div class="vf">
-                <select onchange="c()" id="ca">
+                <select onchange="c()" id="ca" aria-placeholder="압축 알고리즘 선택">
                     <option value="b">Brotli</option>
                     <option value="g">GZip</option>
                 </select>
                 <label><input type="checkbox" id="m" onchange="c()" checked />Minify</label>
             </div>
-            <button onclick="c()">compress</button>
+            <button onclick="c()">URL에 저장하기</button>
             <br />
             <label for="o">URL</label>
             <br />
