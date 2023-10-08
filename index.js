@@ -7,9 +7,12 @@ const port = 3001;
 
 app.get("*", (req, res) => {
     var input = req.path.slice(1);
+    if (input == "robots.txt") {
+        res.sendFile(__dirname + "/robots.txt");
+    }
     input = input.replaceAll("/***", "//");
     if (input == "") {
-        if (req.acceptsLanguages()[0] == "ko") {
+        if (req.acceptsLanguages()[0].includes("ko")) {
             res.sendFile(__dirname + "/index_ko.html");
         } else {
             res.sendFile(__dirname + "/index.html");
@@ -32,21 +35,29 @@ app.get("*", (req, res) => {
             } catch (error) {
                 zlib.brotliDecompress(compressedData, (err, data) => {
                     if (err) {
-                        resolve("It's not compressd text");
+                        reject();
                     } else {
                         resolve(Buffer.from(data, "base64").toString("utf8"));
                     }
                 });
             }
         });
-        decomp.then((value) => {
-            res.send(value);
-        });
+        decomp
+            .then((value) => {
+                res.send(value);
+            })
+            .catch(() => {
+                if (req.acceptsLanguages()[0].includes("ko")) {
+                    res.status(404).sendFile(__dirname + "/error_ko.html");
+                } else {
+                    res.status(404).sendFile(__dirname + "/error.html");
+                }
+            });
     }
 });
 
 function gzipToText(input) {}
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`listening on port ${port}`);
 });
