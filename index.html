@@ -196,7 +196,7 @@
                 return c.join("");
             }
             async function p() {
-                if (window.location.pathname !== "/") {
+                if (window.location.pathname === "/") {
                     try {
                         b(document.documentElement.innerHTML).then((r) => {
                             history.replaceState(null, "", r);
