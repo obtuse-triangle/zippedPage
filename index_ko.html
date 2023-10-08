@@ -196,12 +196,14 @@
                 return c.join("");
             }
             async function p() {
-                try {
-                    b(document.documentElement.innerHTML).then((r) => {
-                        history.replaceState(null, "", r);
-                    });
-                } catch (e) {
-                    console.log(e);
+                if (window.location.pathname !== "/") {
+                    try {
+                        b(document.documentElement.innerHTML).then((r) => {
+                            history.replaceState(null, "", r);
+                        });
+                    } catch (e) {
+                        console.log(e);
+                    }
                 }
             }
         </script>
