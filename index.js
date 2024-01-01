@@ -7,8 +7,10 @@ const port = 3001;
 
 app.get("*", (req, res) => {
     var input = req.path.slice(1);
+    console.log(input);
     if (input == "robots.txt") {
         res.sendFile(__dirname + "/robots.txt");
+	return;
     }
     input = input.replaceAll("/***", "//");
     if (input == "") {
